@@ -1,3 +1,3 @@
-# Tweet Hub API
+# GOAT Tweet Hub API
 
-## A api to control the data gathered by the Scheduler and classified by the SentimentAnalyser
+## A api to control the data gathered by the GOAT-Scheduler and classified by the GOAT-SentimentAnalyser
