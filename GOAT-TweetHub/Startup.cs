@@ -1,15 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Amazon.S3;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace GOAT_TweetHub
 {
@@ -18,6 +12,8 @@ namespace GOAT_TweetHub
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            var options = Configuration.GetAWSOptions();
+            IAmazonS3 client = options.CreateServiceClient<IAmazonS3>();
         }
 
         public IConfiguration Configuration { get; }
@@ -26,6 +22,10 @@ namespace GOAT_TweetHub
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddDefaultAWSOptions(Configuration.GetAWSOptions());
+            services.AddAWSService<IAmazonS3>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

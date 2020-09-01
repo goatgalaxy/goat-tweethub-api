@@ -1,21 +1,16 @@
 ﻿using GOAT_TweetHub.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using GOAT_TweetHub.Models;
 
 namespace GOAT_TweetHub
 {
-    public class Tweet
+    public class Tweet : BaseModel
     {
-        public int Id { get; set; }
-
-        public string Content { get; set; }
+        public string Message { get; set; }
 
         public string Region { get; set; }
 
-        public TweetStatus Status { get; set; }
+        public TweetStatus Status { get; set; } = TweetStatus.InQueue;
 
-        public Sentiment Sentiment { get; set; }
+        public Sentiment? Sentiment { get; set; }
     }
 }
