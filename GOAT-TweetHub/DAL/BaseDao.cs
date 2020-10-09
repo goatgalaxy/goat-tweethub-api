@@ -1,4 +1,5 @@
 ﻿using GOAT_TweetHub.Models;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
@@ -57,5 +58,27 @@ namespace GOAT_TweetHub.DAL
             entry.Reload();
             return entry.Entity;
         }
+
+        public TModel EditPartial(TModel obj, int id)
+        {
+            DbEntityEntry<TModel> entry = Context.Entry(Find(id));
+            obj.Id = id;
+            foreach (string property in entry.CurrentValues.PropertyNames)
+            {
+                if((entry.CurrentValues[property] == null && 
+                        (!obj.GetType().GetProperty(property).GetValue(obj)?.Equals(null) ?? false)) ||
+                    (entry.CurrentValues[property] != null) 
+                        && (!obj.GetType().GetProperty(property)?.Equals(null) ?? false) 
+                        && (!obj.GetType().GetProperty(property).GetValue(obj)?.Equals(entry.CurrentValues[property]) ?? false))
+                {
+                    entry.CurrentValues[property] = obj.GetType().GetProperty(property).GetValue(obj);
+                }
+            }
+            entry.State = EntityState.Modified;
+            Context.SaveChanges();
+            entry.Reload();
+            return entry.Entity;
+        }
+
     }
 }

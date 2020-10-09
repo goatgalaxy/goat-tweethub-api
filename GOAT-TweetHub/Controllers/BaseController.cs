@@ -94,6 +94,24 @@ namespace GOAT_TweetHub.Controllers
             }
         }
 
+        // PUT: api/Base
+        [HttpPatch("{id}")]
+        public virtual ActionResult<TModel> Patch([FromBody] TModel value, int id)
+        {
+            try
+            {
+                return Ok(_service.EditPartial(value, id));
+            }
+            catch (Exception ex)
+            {
+#if DEBUG
+                return StatusCode(500, ex);
+#else
+                return StatusCode(500);
+#endif
+            }
+        }
+
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
         public virtual ActionResult<TModel> Delete(int id)
