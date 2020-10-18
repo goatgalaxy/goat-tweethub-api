@@ -11,6 +11,6 @@ namespace GOAT_TweetHub
 
         public TweetStatus Status { get; set; } = TweetStatus.InQueue;
 
-        public Sentiment? Sentiment { get; set; }
+        public double? Sentiment { get; set; }
     }
 }
